@@ -15,11 +15,11 @@ public class BST {
 	 * Note that the insert method should return the root node of the subtree in
 	 * which we insert the key (and its value).
 	 **/
-	public void insert(int time, int req_index) {
+	public  void insert(int time, int req_index) {
 		root = insert(root, time, req_index);
 	}
 
-	private Node insert(Node Tree, int time, int req_index) {
+	public static Node insert(Node Tree, int time, int req_index) {
 		if (Tree == null)
 			return new Node(time, req_index);
 		if (Tree.getTime() < time)
@@ -104,7 +104,7 @@ public class BST {
 		return min(root); // Replace this line with returning the actual minimum.
 	}
 
-	private Node min(Node Tree) {
+	public Node min(Node Tree) {
 		if (Tree.getLeft() == null) {
 			return Tree;// was Tree, changing to null to test
 		}
@@ -119,7 +119,7 @@ public class BST {
 		return max(root); // Replace this line with returning the actual maximum.
 	}
 
-	private Node max(Node Tree) {
+	public Node max(Node Tree) {
 		if (Tree.getRight() == null)
 			return Tree;
 		return max(Tree.getRight());
@@ -127,7 +127,7 @@ public class BST {
 	public Node find(int time) {
 		return find(root, time);
 	}
-	private Node find(Node node, int time) {
+	public static Node find(Node node, int time) {
 		if (node == null)
 			return null;
 		if (node.getTime() == time)
@@ -135,7 +135,7 @@ public class BST {
 		if (time < node.getTime())
 			return find(node.getLeft(), time);
 		return find(node.getRight(), time);
-	}
+	} 
 	/**
 	 * Remove the node that contains this time. If this time is not present in the
 	 * structure, this method does nothing.

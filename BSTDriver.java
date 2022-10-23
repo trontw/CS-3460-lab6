@@ -1,5 +1,5 @@
 public class BSTDriver {
-    public Node root; // The root node of the tree.
+    public static Node root; // The root node of the tree.
     public Node del = null;
 
     public BSTDriver() {

@@ -5,7 +5,8 @@ public class Requests {
 	private Airline airline; // Airline object storing the meta data of the airline.
 
 	/**
-		Constructor: creates a Request object that represents the t command. No need for airline information.
+		Constructor: creates a Request object that represents the t command. 
+		No need for airline information.
 	**/
 	public Requests(String c, int t) {
 		command = c;
@@ -14,7 +15,8 @@ public class Requests {
 	}
 
 	/**
-		Constructor: creates a Request object that represents the r command. Stores the airline information for this request.
+		Constructor: creates a Request object that represents the r command. 
+		Stores the airline information for this request.
 	**/
 	public Requests(String c, int t, String name, String num, String src, String des) {
 		command = c;
@@ -65,7 +67,7 @@ public class Requests {
 
 	/**
 		Accessor to get the airline.
-	**/
+	**/ 
 	public Airline getAirline() {
 		return airline;
 	}
