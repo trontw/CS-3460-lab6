@@ -59,10 +59,10 @@ public class RunwayReservation {
 		//System.out.println("The number of lines is = "+n);
 		BST tree = new BST();
 		for (i = 0; i < reqs.length; ++i) {
-			Requests r = reqs[i];
+			//Requests r = reqs[i];
 			//System.out.println("Cmd = "+reqs[i].getCommand());
 			if (reqs[i].getCommand().equals("r") ) {
-				//System.out.println("Found a reservation cmd r");
+				System.out.println("Found a reservation cmd r");
 				/**
 				 * Now we check to see if it is a valid request
 				 * We will call find from BST and check for the following conditions:
@@ -70,12 +70,15 @@ public class RunwayReservation {
 				 * 2) if not the first entry, is this request 'r'
 				 *    first - k < r < first + k
 				 */
+				 
 				int t = reqs[i].getTime();
 				// First entry becomes the root of the BST tree
 				if (tree.root == null) {
-					System.out.println("t in initial root = "+t);
+					//System.out.println("t in initial root = "+t);
 					tree.insert(t, i);
 				}
+				
+				 
 				//Now we try to insert valid flights 
 				for (int j = 0; j < reqs.length; ++j) {
 					int t2 = reqs[j].getTime();
@@ -87,20 +90,24 @@ public class RunwayReservation {
 						for (tree.find(t); tree.find(t) != null; ++t) {
 							if (tree.find(t2) == null) {
 								tree.insert(t2, i);
-								System.out.println("Made a reservation with t = "+t2);
+								//System.out.println("Made a reservation with t = "+t2);
 							}
 						}
 					}
 				}
-
+				
+			}
+				
 			if (reqs[i].getCommand().equals("t") ) {
 				System.out.println("Found a reservation cmd t");
-				//System.out.println("Test value = "+test);
+				//Update the current time
+				time = reqs[i].getTime();
+				System.out.println("Timeline time = "+time);
 				//System.out.println("t is = "+t+" and time is = "+time);
 			}
 			
 			//System.out.println("The 'n' lines is = "+i);
-			}
+			
 		}
 		tree.print();
 	}
