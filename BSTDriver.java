@@ -31,7 +31,7 @@ public class BSTDriver {
         tree.print(); 
         // Pred Test
         int t = 25;
-        Node output = tree.pred(tree.root, t);
+        Node output = tree.pred(t);
         System.out.println("tree.root = "+tree.root);
         if (output != null)
             System.out.println("Pred search test. Pred of " + t + " is = " + output.getTime());
@@ -39,14 +39,14 @@ public class BSTDriver {
             System.out.println("Null Pred for " + t);
         // Succ Test
         int e = 25; 
-        Node output2 = tree.succ(tree.root, t);
+        Node output2 = tree.succ(t);
         if (output2 != null)
             System.out.println("Succ search test. Succ of " + e + " is = " + output2.getTime());
         else
             System.out.println("Null Succ for " + e);
         // Delete Test
         
-        //tree.delete(9);
+        tree.delete(9);
         tree.delete(25);
         //System.out.println("Delete result is "+del);
         //if (output3 != null)

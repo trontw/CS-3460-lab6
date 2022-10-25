@@ -20,7 +20,7 @@ public class BST {
 		root = insert(root, time, req_index);
 	}
 
-	public static Node insert(Node Tree, int time, int req_index) {
+	private Node insert(Node Tree, int time, int req_index) {
 		if (Tree == null)
 			return new Node(time, req_index);
 		if (Tree.getTime() < time)
@@ -40,10 +40,10 @@ public class BST {
 	 **/
 	public Node pred(int time) {
 		noPred = null;
-		return null; // Replace this line with returning the actual predecessor.
+		return pred(root, time); // Replace this line with returning the actual predecessor.
 	}
 
-	public Node pred(Node Tree, int time) {
+	private  Node pred(Node Tree, int time) {
 
 		if (Tree == null) {
 			return null;
@@ -74,10 +74,10 @@ public class BST {
 	 **/
 	public Node succ(int time) {
 		noSucc = null;
-		return null; // Replace this line with returning the actual successor.
+		return succ(root, time); // Replace this line with returning the actual successor.
 	}
 
-	public Node succ(Node Tree, int time) {
+	private Node succ(Node Tree, int time) {
 		if (Tree == null) {
 			return null;
 		}
@@ -105,7 +105,7 @@ public class BST {
 		return min(root); // Replace this line with returning the actual minimum.
 	}
 
-	public Node min(Node Tree) {
+	private Node min(Node Tree) {
 		if (Tree.getLeft() == null) {
 			return Tree;// was Tree, changing to null to test
 		}
@@ -120,7 +120,7 @@ public class BST {
 		return max(root); // Replace this line with returning the actual maximum.
 	}
 
-	public Node max(Node Tree) {
+	private Node max(Node Tree) {
 		if (Tree.getRight() == null)
 			return Tree;
 		return max(Tree.getRight());
@@ -128,7 +128,7 @@ public class BST {
 	public Node find(int time) {
 		return find(root, time);
 	}
-	public static Node find(Node node, int time) {
+	private Node find(Node node, int time) {
 		if (node == null)
 			return null;
 		if (node.getTime() == time)
@@ -138,17 +138,17 @@ public class BST {
 		return find(node.getRight(), time);
 	} 
 
+	public boolean empty() {
+		return root == null;
+	}
+
 	public boolean verify(int time, int k){
 		if (root == null)
 			return true;
 	return verify(root, time, k);
 	}
 	
-	public boolean empty() {
-		return root == null;
-	}
-
-	public boolean verify(Node tree, int time, int k){
+	private boolean verify(Node tree, int time, int k){
 		if (tree == null)
 			return true;
 		if ((Math.abs(tree.getTime() - time) < k))
@@ -168,7 +168,8 @@ public class BST {
 		root = delete(root, time);
 	}
 
-	private Node delete(Node root2, int time) {		
+	private Node delete(Node root2, int time) {
+		
 		//First we want to find the node
 		//if (root2.getLeft() != null)
 		//	System.out.println("root2 getLeft value is = "+root2.getLeft().getTime());

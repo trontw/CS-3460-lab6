@@ -98,8 +98,8 @@ public class RunwayReservation {
 					//System.out.println("Smallest time INSIDE WHILE = "+smallest.getTime());
 					System.out.println(reqs[smallest.getReq_index()].getAirline());			
 					if (smallest != null) {
-						Node output = tree.pred(tree.root, smallest.getTime());
-						Node output2 = tree.succ(tree.root, smallest.getTime());
+						//Node output = tree.pred(smallest.getTime());
+						//Node output2 = tree.succ(smallest.getTime());
 						//Remove all requests from the Tree with times less than the current time.
 						tree.delete(smallest.getTime());
 						smallest = tree.min();
@@ -117,8 +117,8 @@ public class RunwayReservation {
 		while (tree.root != null){
 			smallest = tree.min();
 			System.out.println(reqs[smallest.getReq_index()].getAirline());	
-			Node output = tree.pred(tree.root, smallest.getTime());
-			Node output2 = tree.succ(tree.root, smallest.getTime());
+			//Node output = tree.pred(smallest.getTime());
+			//Node output2 = tree.succ(smallest.getTime());
 			tree.delete(smallest.getTime());
 		}
 		//System.out.println(reqs[biggest.getReq_index()].getAirline());
