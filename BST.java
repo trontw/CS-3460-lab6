@@ -1,3 +1,4 @@
+import javax.lang.model.util.ElementScanner6;
 
 public class BST {
 	public Node root; // The root node of the tree.
@@ -136,6 +137,29 @@ public class BST {
 			return find(node.getLeft(), time);
 		return find(node.getRight(), time);
 	} 
+
+	public boolean verify(int time, int k){
+		if (root == null)
+			return true;
+	return verify(root, time, k);
+	}
+	
+	public boolean empty() {
+		return root == null;
+	}
+
+	public boolean verify(Node tree, int time, int k){
+		if (tree == null)
+			return true;
+		if ((Math.abs(tree.getTime() - time) < k))
+			return false;
+		if (tree.getTime() > time) 
+			return verify(tree.getLeft(), time, k);
+		if (tree.getTime() < time)
+			return verify(tree.getRight(), time, k);
+		return false;
+	}
+
 	/**
 	 * Remove the node that contains this time. If this time is not present in the
 	 * structure, this method does nothing.
@@ -156,19 +180,19 @@ public class BST {
 		Node the_root = root;
 		
 		//First we want to find the node
-		if (root2.getLeft() != null)
-			System.out.println("root2 getTime value is = "+root2.getLeft().getTime());
-		if (root2.getRight() != null)
-			System.out.println("root2 getTime value is = "+root2.getRight().getTime());
-		if (root2 == null) 
-			return root2;
+		//if (root2.getLeft() != null)
+		//	System.out.println("root2 getLeft value is = "+root2.getLeft().getTime());
+		//if (root2.getRight() != null)
+		//	System.out.println("root2 getRight value is = "+root2.getRight().getTime());
+		//if (root2 == null) 
+		//	return root2;
 			//If in the left-subtree
-		else if (time < root2.getTime()) {
+		if (time < root2.getTime()) {
 			System.out.println("Inside LEFT-subtree.");
-			System.out.println("left-subtree root2 left node time = "+root2.getLeft().getTime());
+			//System.out.println("left-subtree root2 left node time = "+root2.getLeft().getTime());
 			//System.out.println("left-subtree time = "+time);
 			root2 = delete(root2.getLeft());
-			System.out.println("left-subtree root2 = "+root2);
+			//System.out.println("left-subtree root2 = "+root2);
 			//If in the right-subtree
 		} else if(time > root2.getTime()) {
 			System.out.println("Inside RIGHT-subtree.");
@@ -176,47 +200,67 @@ public class BST {
 			//If we found the node, then we will prepare to delete it
 			//depending on which case it falls under.
 
-			//*** Case 1: No child ***
+			//*** Case 1: NO CHILD ***
 		} else if (root2.getLeft() == null && root2.getRight() == null) {
 			//root2 = null;
 			//root2.setLeft(null);
-			System.out.println("*** Inside NO child. ***");
-			// If node is the Right child of parent, use pred
+			//System.out.println("*** Inside NO child. ***");
+			// If node is the Right child of parent, use PRED
 			Node root2_pred = pred(root2, root2.getTime());
-			System.out.println("root2 time is = "+root2.getTime());
-			System.out.println("root2_pred getRight time is = "+root2_pred.getRight().getTime());
-			if (root2_pred.getRight().getTime() == root2.getTime())
+			//System.out.println("root2 time is = "+root2.getTime());
+			//System.out.println("root2 = "+root2);
+			//System.out.println("root2_pred is = "+root2_pred);
+			if (root2 != null && root2_pred != null && root2_pred.getRight().getTime() == root2.getTime()){
+				System.out.println("Using PRED_R");
 				root2_pred.setRight(null);
-			
+				root2 = root2_pred;
+			} else if (root2_pred != null && root2_pred.getLeft().getTime() == root2.getTime()){
+				System.out.println("Using PRED_L");
+				root2_pred.setLeft(null);
+				root2 = root2_pred;
+			} //else
+				//delete(root2);
 			// If node is the Left child of parent, use succ
 			Node root2_succ = succ(root2, root2.getTime());
-			System.out.println("root2_succ time is = "+root2_succ.getTime());
-			System.out.println("root2_succ getLeft time is = "+root2_succ.getLeft().getTime());
-			if (root2_succ.getLeft().getTime() == root2.getTime())
+			//System.out.println("root2_succ is = "+root2_succ);
+			//System.out.println("root2_succ getLeft time is = "+root2_succ.getLeft().getTime());
+			if (root2 != null && root2_succ != null && root2_succ.getLeft().getTime() == root2.getTime()){
+				//System.out.println("Using SUCC_L");
+				//System.out.println();
 				root2_succ.setLeft(null);
-			//return root2;
+				root2 = root2_succ;
+			} else if (root2_succ != null && root2_succ.getRight().getTime() == root2.getTime()){
+				//System.out.println("Using SUCC_R");
+				//System.out.println();
+				root2_succ.setRight(null);
+				root2 = root2_succ;
+			} //else 
+				//delete(root2);
+			return root2;
 
 			//*** Case 2: One child (right child present) ***
 		} else if (root2.getLeft() == null) {
-			System.out.println("Inside One right child present");
+			//System.out.println("Inside One right child present");
+			//System.out.println("root2 time is = "+root2.getTime());
 			Node temp = root2.getRight();
-			root2 = root2.getRight();
+			//System.out.println("temp time is = "+temp.getTime());
+			//root2 = root2.getRight();
 			root2.setTime(temp.getTime());
 			root2.setReq_index(temp.getReq_index());
 			root2.setRight(null);
-			//return root2;
+			return root2;
 
 			//*** Case 2: One child (left child present) ***
 		} else if (root2.getRight() == null) {
-			System.out.println("Inside One left child present");
-			System.out.println("root2 time is = "+root2.getTime());
+			//System.out.println("Inside One left child present");
+			//System.out.println("root2 time is = "+root2.getTime());
 			Node temp = root2.getLeft();
-			System.out.println("temp time is = "+temp.getTime());
+			//System.out.println("temp time is = "+temp.getTime());
 			root2.setTime(temp.getTime());
 			root2.setReq_index(temp.getReq_index());
 			//root2 = root2.getLeft();
 			root2.setLeft(null);
-			//return root2;
+			return root2;
 
 			//*** Case 3: Two children ***
 		} else {
@@ -238,11 +282,11 @@ public class BST {
 			//delete(root2);
 			//temp = null;
 			//root2 = delete(root2);
-			//return root2;
+			return root2;
 		}
 		return root2;
 	}
-
+ 
 	/**
 	 * Prints the contents of the tree in sorted order.
 	 **/
@@ -259,6 +303,9 @@ public class BST {
 			print(Tree.getRight());
 		}
 
+	}
+
+	public void delete(Node root2, int time) {
 	}
 
 }

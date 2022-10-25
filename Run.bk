@@ -63,7 +63,7 @@ public class RunwayReservation {
 			//Requests r = reqs[i];
 			//System.out.println("Cmd = "+reqs[i].getCommand());
 			if (reqs[i].getCommand().equals("r") ) {
-				//System.out.println("Found a reservation cmd r");
+				System.out.println("Found a reservation cmd r");
 				/**
 				 * Now we check to see if it is a valid request
 				 * We will call find from BST and check for the following conditions:
@@ -71,56 +71,75 @@ public class RunwayReservation {
 				 * 2) if not the first entry, is this request 'r'
 				 *    first - k < r < first + k
 				 */
+				 
 				int t = reqs[i].getTime();
 				// First entry becomes the root of the BST tree
 				if (tree.root == null) {
+					//System.out.println("t in initial root = "+t);
 					tree.insert(t, i);
 				}
-				// Try to insert valid flights using 'verify'
-				// (Note: a recursive call is the only way to do this: thus verify)
-				if (tree.verify(t, k))
-					tree.insert(t, i);
-				//tree.print();
+				
+				System.out.println("**** k = "+k+" ****");
+				//Now we try to insert valid flights 
+				for (int j = 0; j < reqs.length; ++j) {
+					int t2 = reqs[j].getTime();
+					int weez = Math.abs(t2 - t);
+					
+					//Check to make sure they are within the allowed time range
+					System.out.println("**** t2 = "+t2+" and t = "+t+" ****");
+					System.out.println("|||||  t2 - t1 = "+weez+"  |||||");
+					if (Math.abs(t2 - t) < k) {
+						//System.out.println("Cannot make a reservation.");
+					} else {
+						//Make sure the node inserting is not already there
+						for (tree.find(t); tree.find(t) != null; ++t) {
+							//First look for previous nodes (i.e. 9 and 20)
+							//if (tree.find(t) != null && (t - t > k)) {
+								System.out.println("t = "+t+" was found.");
+								//Make sure t doesn't already exist
+								if (tree.find(t2) == null) {
+									tree.insert(t2, i);
+									System.out.println("Made a reservation with t2 = "+t2);
+								}
+							//}
+						}
+					}
+				}
+				
 			}
 				
 			if (reqs[i].getCommand().equals("t") ) {
-				int t = reqs[i].getTime();
-				//System.out.println("Found a reservation cmd t");
+				//int t = reqs[i].getTime();
+				System.out.println("Found a reservation cmd t");
 				//Update the current time
-				time = t;
+				time = reqs[i].getTime();
 				time = base_time + time;
 				base_time = time;
 				System.out.println("Current time = "+time+" units.");
 				Node smallest = tree.min();
-				//System.out.println("Smallest time BEFORE WHILE = "+smallest.getTime());
+				System.out.println("Smallest time BEFORE WHILE = "+smallest.getTime());
 				//Print all request from the Tree with times less than the current time.
-				while (smallest.getTime() < time){
-					//System.out.println("Smallest time INSIDE WHILE = "+smallest.getTime());
-					System.out.println(reqs[smallest.getReq_index()].getAirline());			
+				if (smallest.getTime() < time){
+					System.out.println("Smallest time INSIDE WHILE = "+smallest.getTime());
+					System.out.println(reqs[smallest.getReq_index()].getAirline());				
+					System.out.println("smallest is = "+smallest.getTime());
 					if (smallest != null) {
-						Node output = tree.pred(tree.root, smallest.getTime());
-						Node output2 = tree.succ(tree.root, smallest.getTime());
 						tree.delete(smallest);
 						smallest = tree.min();
-						//System.out.println("Smallest AFTER DEL = "+smallest.getTime());
 					} 					
 				}										
 				//Remove all requests from the Tree with times less than the current time.
 			}
+			Node biggest = tree.max();
+			System.out.println("BIGGEST time = "+biggest.getTime()+" units");
+			Node smallest = null;
+			if (tree.root != null){
+				smallest = tree.min();
+				System.out.println(reqs[smallest.getReq_index()].getAirline());	
+				tree.delete(smallest);
+			}
 			
 		}
-		//Handle the last time, make it the last; print everything after it
-		Node biggest = tree.max();
-		System.out.println("Current time = "+biggest.getTime()+" units");
-		Node smallest = null;
-		if (tree.root != null){
-			smallest = tree.min();
-			System.out.println(reqs[smallest.getReq_index()].getAirline());	
-			Node output = tree.pred(tree.root, smallest.getTime());
-			Node output2 = tree.succ(tree.root, smallest.getTime());
-			tree.delete(smallest);
-		}
-		System.out.println(reqs[biggest.getReq_index()].getAirline());
-		//tree.print();
+		tree.print();
 	}
 }

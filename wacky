@@ -1,0 +1,20 @@
+Current time = 7 units.
+Smallest time BEFORE WHILE = 9
+Current time = 17 units.
+Smallest time BEFORE WHILE = 9
+Smallest time INSIDE WHILE = 9
+UA 1714 CLT IAH
+*** Inside NO child. ***
+root2 time is = 9
+root2_pred is = null
+root2_succ is = null
+Smallest AFTER DEL = 9
+Current time = 25 units
+UA 1714 CLT IAH
+*** Inside NO child. ***
+root2 time is = 9
+root2_pred is = null
+root2_succ is = null
+9 
+20 
+25 
