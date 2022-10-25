@@ -100,12 +100,13 @@ public class RunwayReservation {
 					if (smallest != null) {
 						Node output = tree.pred(tree.root, smallest.getTime());
 						Node output2 = tree.succ(tree.root, smallest.getTime());
-						tree.delete(smallest);
+						//Remove all requests from the Tree with times less than the current time.
+						tree.delete(smallest.getTime());
 						smallest = tree.min();
 						//System.out.println("Smallest AFTER DEL = "+smallest.getTime());
 					} 					
 				}										
-				//Remove all requests from the Tree with times less than the current time.
+				
 			}
 			
 		}
@@ -113,14 +114,14 @@ public class RunwayReservation {
 		Node biggest = tree.max();
 		System.out.println("Current time = "+biggest.getTime()+" units");
 		Node smallest = null;
-		if (tree.root != null){
+		while (tree.root != null){
 			smallest = tree.min();
 			System.out.println(reqs[smallest.getReq_index()].getAirline());	
 			Node output = tree.pred(tree.root, smallest.getTime());
 			Node output2 = tree.succ(tree.root, smallest.getTime());
-			tree.delete(smallest);
+			tree.delete(smallest.getTime());
 		}
-		System.out.println(reqs[biggest.getReq_index()].getAirline());
+		//System.out.println(reqs[biggest.getReq_index()].getAirline());
 		//tree.print();
 	}
 }

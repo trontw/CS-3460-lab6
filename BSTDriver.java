@@ -46,7 +46,7 @@ public class BSTDriver {
             System.out.println("Null Succ for " + e);
         // Delete Test
         
-        tree.delete(9);
+        //tree.delete(9);
         tree.delete(25);
         //System.out.println("Delete result is "+del);
         //if (output3 != null)
